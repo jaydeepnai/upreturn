@@ -40,8 +40,10 @@ function Login() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
+      navigate("/Dashboard")
       const response = await axios.post('your_api_endpoint', values);
       console.log(response.data);
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -65,59 +67,60 @@ function Login() {
 
       </p>
 
-
-      {/* <p class="password-wM7" id="229:55">Password</p>
-      <p class="username-hUh" id="229:56">Username</p>
-      <p class="log-in-xvR" id="229:57" onClick={()=>{
-        navigate("Dashboard/")
-      }}>Log in</p> */}
       <Formik
-        initialValues={{ username: '', password: '' }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form className={classes.form}>
-              <TextField
-              name="username"
-              type="text"
-              label="Username"
-              variant="outlined"
-              // component={TextField}
-              fullWidth
-              
-              // class="username-hUh" id="229:56"
-              className={classes.textField}
-            />
-            <ErrorMessage name="username" component="div" className='password' />
-              <TextField
-              name="password"
-              type="password"
-              label="Password"
-              variant="outlined"
-              // component={TextField}
-              fullWidth
-              // class="password-wM7" id="229:55"
-              className={classes.textField}
-            />
-            <ErrorMessage name="password" component="div"  className='password' />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              disabled={isSubmitting}
-              // class="log-in-xvR" id="229:57"
-              className={classes.button}
-            // onClick={()=>{
-            //   navigate("Dashboard/")
-            // }}
-            >
-              Login
-            </Button>
-          </Form>
+  initialValues={{ username: '', password: '' }}
+  validationSchema={validationSchema}
+  onSubmit={handleSubmit} // Call handleSubmit function to handle form submission
+>
+  {({ isSubmitting, values, errors }) => (
+    <Form className={classes.form}>
+      {console.log(errors)}
+      <Field
+        validateOnBlur
+        validateOnChange
+        name="username"
+        render={({ field, form }) => (
+          <TextField
+            {...field} // spread the field props
+            type="text"
+            label="Username"
+            variant="outlined"
+            fullWidth
+            className={classes.textField}
+          />
         )}
-      </Formik>
+      />
+      <ErrorMessage name="username" component="div" className='password' />
+      <Field
+        validateOnBlur
+        validateOnChange
+        name="password"
+        render={({ field, form }) => (
+          <TextField
+            {...field} // spread the field props
+            type="password"
+            label="Password"
+            variant="outlined"
+            fullWidth
+            className={classes.textField}
+          />
+        )}
+      />
+      <ErrorMessage name="password" component="div" className='password' />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        disabled={isSubmitting}
+        className={classes.button}
+      >
+        Login
+      </Button>
+    </Form>
+  )}
+</Formik>
+
     </div>
 
   )
