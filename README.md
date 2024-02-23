@@ -1,2 +1,2 @@
 # upreturn
-hare krishna
+Hare Krishna Hare Rama
